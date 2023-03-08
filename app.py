@@ -1,80 +1,48 @@
 import streamlit as st
+from transformers import pipeline
 
-st.set_page_config(page_title="Decision Maker App", page_icon=":thinking_face:")
+# Define a function to generate a response from GPT-2 model
+def generate_response(prompt):
+    # Load the GPT-2 model
+    generator = pipeline('text-generation', model='gpt2')
 
-st.title("Decision Maker App")
+    # Generate a response to the prompt
+    response = generator(prompt, max_length=1000, num_return_sequences=1)[0]['generated_text']
 
-# initialize variables
-if "options" not in st.session_state:
-    st.session_state.options = ["" for i in range(2)]
+    return response
 
-if "step" not in st.session_state:
-    st.session_state.step = 1
+# Define the Streamlit app
+def app():
+    # Set the app's title
+    st.title("Chat with ChatGPT")
 
-if "reasons" not in st.session_state:
-    st.session_state.reasons = {opt: [] for opt in st.session_state.options}
+    # Create a sidebar menu
+    st.sidebar.header("Settings")
+    prompt = st.sidebar.text_input("Prompt", "Hello, how are you?")
+    submit_button = st.sidebar.button("Submit")
 
-if "votes" not in st.session_state:
-    st.session_state.votes = {opt: 0 for opt in st.session_state.options}
+    # Create a chat window
+    st.markdown("---")
+    st.markdown("### Chat")
 
-# define chatbot message and input functions
-def chatbot_message(msg):
-    st.write("Bot: " + msg)
+    chat_history = []
+    if submit_button:
+        # Add the user's prompt to the chat history
+        chat_history.append(("User", prompt))
 
-def chatbot_input(label, key):
-    return st.text_input("You: " + label, key=key)
+        # Generate a response to the user's prompt
+        response = generate_response(prompt)
 
-# define function to handle option inputs
-def handle_option_input(i):
-    if i < len(st.session_state.options) - 1:
-        chatbot_message("Please enter your next option:")
-    else:
-        chatbot_message("Thank you for entering your options.")
-        st.session_state.step += 1
+        # Add the response to the chat history
+        chat_history.append(("ChatGPT", response))
 
-# define function to handle reason inputs
-def handle_reason_input(option):
-    if option in st.session_state.reasons and st.session_state.reasons[option]:
-        chatbot_message(f"Please enter your next reason for {option}:")
-    else:
-        chatbot_message(f"Please enter a reason for {option}:")
-    st.session_state.step += 1
-
-# define function to handle vote inputs
-def handle_vote_input():
-    chatbot_message("Please vote on the following options:")
-    for option, reasons in st.session_state.reasons.items():
-        st.write(f"{option}: {len(reasons)} reasons")
-        st.session_state.votes[option] = st.number_input(f"Vote for {option}", value=0, step=1, key=option)
-    st.session_state.step += 1
-
-# handle chat input based on current step
-if st.session_state.step == 1:
-    chatbot_message("Please enter the problem you need to make a decision about:")
-    st.session_state.step += 1
-elif st.session_state.step == 2:
-    option_input = chatbot_input("Please enter your first option:", "option_input")
-    if option_input:
-        st.session_state.options.append(option_input)
-        handle_option_input(len(st.session_state.options) - 1)
-elif st.session_state.step == 3:
-    for i, option in enumerate(st.session_state.options):
-        if not st.session_state.reasons[option]:
-            reason_input = chatbot_input(f"Please enter a reason for {option}:", f"reason_input_{option}")
+    # Display the chat history
+    for speaker, text in chat_history:
+        if speaker == "User":
+            st.write(f"You: {text}")
         else:
-            reason_input = chatbot_input(f"Please enter your next reason for {option}:", f"reason_input_{option}")
-        if reason_input:
-            st.session_state.reasons[option].append(reason_input)
-            handle_reason_input(option)
-            break
-    else:
-        handle_vote_input()
-elif st.session_state.step == 4:
-    chatbot_message("Thank you for voting! Here are the results:")
-    for option, reasons in st.session_state.reasons.items():
-        st.write(f"{option}: {len(reasons)} reasons, {st.session_state.votes[option]} votes")
-    st.session_state.step += 1
+            st.write(f"ChatGPT: {text}")
 
-# create restart button
-if st.session_state.step > 4:
-    if st.button
+# Run the Streamlit app
+if __name__ == "__main__":
+    app()
