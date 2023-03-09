@@ -10,7 +10,7 @@ st.set_page_config(page_title="My Decision Maker", page_icon=":dart:")
 
 # Define the content of the main page
 st.header("My Decision Maker")
-st.subheader("Choose your fate...")
+st.subheader("Choose any option here to get you started ...")
 
 # Define the sidebar
 selected_option = sidebar.add_sidebar(options)
@@ -19,33 +19,19 @@ selected_option = sidebar.add_sidebar(options)
 suggestions.add_suggestions()
 
 # Define the text input and send button
-if "selected_suggestion" in st.session_state:
-    st.text_input("Enter your decision here...", value=st.session_state.selected_suggestion)
-else:
-    text_input = st.text_input("Enter your decision here...")
-
-if st.button("Send"):
+col1, col2 = st.beta_columns([4, 1])
+with col1:
     if "selected_suggestion" in st.session_state:
-        st.session_state.selected_suggestion = None
-        text_input = ""
+        text_input = st.text_input("Enter your decision here...", value=st.session_state.selected_suggestion)
     else:
-        st.session_state.text_input = text_input
-        text_input = ""
-
-# Center the content
-st.markdown(
-    """
-    <style>
-    .centered {
-        display: flex;
-        justify-content: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Wrap the content in a div with the "centered" class
-st.markdown('<div class="centered">', unsafe_allow_html=True)
-# Your content here
-st.markdown('</div>', unsafe_allow_html=True)
+        text_input = st.text_input("Enter your decision here...")
+with col2:
+    st.write("") # Add some space
+    st.write("") # Add some space
+    if st.button("Send"):
+        if "selected_suggestion" in st.session_state:
+            st.session_state.selected_suggestion = None
+            text_input = ""
+        else:
+            st.session_state.text_input = text_input
+            text_input = ""
