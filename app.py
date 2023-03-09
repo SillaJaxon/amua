@@ -16,11 +16,7 @@ st.subheader("Choose any option here to get you started ...")
 selected_option = sidebar.add_sidebar(options)
 
 # Define the grid of buttons with generic suggestions
-show_suggestions = True
-if st.button("Send"):
-    show_suggestions = False
-    st.session_state.text_input = ""  # Clear the text input
-suggestions.add_suggestions(show=show_suggestions)
+suggestions.add_suggestions()
 
 # Define the text input and send button
 col1, col2 = st.beta_columns([4, 1])
@@ -29,10 +25,13 @@ with col1:
         text_input = st.text_input("Enter your decision here...", value=st.session_state.selected_suggestion)
     else:
         text_input = st.text_input("Enter your decision here...")
-    st.session_state.text_input = text_input  # Store the text input in session state
 with col2:
     st.write("") # Add some space
     st.write("") # Add some space
     if st.button("Send"):
-        st.session_state.selected_suggestion = None
-        st.empty()  # Clear the page
+        if "selected_suggestion" in st.session_state:
+            st.session_state.selected_suggestion = None
+            text_input = ""
+        else:
+            st.session_state.text_input = text_input
+            text_input = ""
