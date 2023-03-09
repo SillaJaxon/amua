@@ -1,6 +1,6 @@
 import streamlit as st
 
-def add_suggestions():
+def add_suggestion():
     col1, col2, col3 = st.beta_columns(3)
     with col1:
         if st.button("Do it", key="do_it"):
