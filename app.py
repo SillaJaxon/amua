@@ -10,13 +10,15 @@ st.set_page_config(page_title="My Decision Maker", page_icon=":dart:")
 
 # Define the content of the main page
 st.header("My Decision Maker")
-st.subheader("Choose any option here to get you started ...")
+if not st.session_state.get("button_clicked", False):
+    st.subheader("Choose any option here to get you started ...")
 
 # Define the sidebar
 selected_option = sidebar.add_sidebar(options)
 
 # Define the grid of buttons with generic suggestions
-suggestions.add_suggestions()
+if not st.session_state.get("button_clicked", False):
+    suggestions.add_suggestions()
 
 # Define the text input and send button
 col1, col2 = st.beta_columns([4, 1])
@@ -29,6 +31,7 @@ with col2:
     st.write("") # Add some space
     st.write("") # Add some space
     if st.button("Send"):
+        st.session_state["button_clicked"] = True
         if "selected_suggestion" in st.session_state:
             st.session_state.selected_suggestion = None
             text_input = ""
