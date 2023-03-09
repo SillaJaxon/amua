@@ -22,14 +22,16 @@ suggestions.add_suggestions()
 col1, col2 = st.beta_columns([4, 1])
 with col1:
     if "selected_suggestion" in st.session_state:
-        st.text_input("Enter your decision here...", value=st.session_state.selected_suggestion, key="chat-input")
+        text_input = st.text_input("Enter your decision here...", value=st.session_state.selected_suggestion)
     else:
-        text_input = st.text_input("Enter your decision here...", key="chat-input")
+        text_input = st.text_input("Enter your decision here...")
 with col2:
-    if st.button("", key="send-button"):
+    st.write("") # Add some space
+    st.write("") # Add some space
+    if st.button("Send"):
         if "selected_suggestion" in st.session_state:
             st.session_state.selected_suggestion = None
+            text_input = ""
         else:
             st.session_state.text_input = text_input
-        text_input = ""
-st.write(":email:", unsafe_allow_html=True)
+            text_input = ""
