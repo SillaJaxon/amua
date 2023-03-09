@@ -1,31 +1,43 @@
 import streamlit as st
 
-def app():
-    # Set the app's title
-    st.title("My Decision Helper")
+# Define the options for the buttons in the sidebar
+options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"]
 
-    st.sidebar.header("Decisions")
-    option = st.sidebar.selectbox("Select an option", ["Option 1", "Option 2", "Option 3"])
+# Define the layout of the app
+st.set_page_config(page_title="My Decision Maker", page_icon=":dart:")
 
+# Define the sidebar
+st.sidebar.title("Options")
+selected_option = st.sidebar.radio("", options)
 
-    # Add a chat input and buttons
-    st.subheader("Buttons")
-    button_grid = st.beta_container()
-    with button_grid:
-        col1, col2, col3 = st.beta_columns(3)
-        if col1.button("I want to apprach the new lady"):
-            chat_suggection = "I want to apprach the new lady"
-        if col2.button("I want to start a new community"):
-            chat_suggection = "I want to start a new community"
-        if col3.chat_suggection("I want to learn swimming"):
-            chat_input = "I want to learn swimming"
+# Define the content of the main page
+st.header("My Decision Maker")
+st.subheader("Choose your fate...")
 
-    # Display the chat input
-    st.subheader("Output")
-    st.write(chat_input)
-    st.subheader("What is your decision in one sentence")
-    chat_input = st.text_input("Enter your thought here:")
+# Define the grid of buttons
+col1, col2, col3 = st.beta_columns(3)
+with col1:
+    st.button("Button 1")
+with col2:
+    st.button("Button 2")
+with col3:
+    st.button("Button 3")
 
-# Run the Streamlit app
-if __name__ == "__main__":
-    app()
+col4, col5, col6 = st.beta_columns(3)
+with col4:
+    st.button("Button 4")
+with col5:
+    st.button("Button 5")
+with col6:
+    st.button("Button 6")
+
+col7, col8, col9 = st.beta_columns(3)
+with col7:
+    st.button("Button 7")
+with col8:
+    st.button("Button 8")
+with col9:
+    st.button("Button 9")
+
+# Define the text input at the bottom of the page
+st.text_input("Enter your decision here...")
