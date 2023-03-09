@@ -3,10 +3,10 @@ import streamlit as st
 def add_suggestions():
     suggestion1 = "Tell the HR about your toxic work environment"
     suggestion2 = "Start morning runs three times a week"
-    suggestion3 = "Start learning web3"
+    suggestion3 = "Start learning web3 Technology"
     suggestion4 = "Pitch your new idea to your friend of buying land in Kamulu"
     suggestion5 = "Stop talking to your now toxic girlfriend for a while"
-    suggestion6 = "Apply for a car loan"
+    suggestion6 = "Apply for a car loan at your chama"
     suggestion7 = "Plan on shifting to a bigger house"
     suggestion8 = "Optimize your code of the Streamlit app"
     suggestion9 = "Avoid using Ngong Road during rush hour"
