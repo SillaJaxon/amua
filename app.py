@@ -1,6 +1,7 @@
 import streamlit as st
 import sidebar
 import suggestions
+from streamlit_tags import st_tags
 
 # Define the options for the buttons in the sidebar
 options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"]
@@ -28,10 +29,11 @@ with col1:
 with col2:
     st.write("") # Add some space
     st.write("") # Add some space
-    if st.button("Send"):
+    if st.button("", key="send_button", help="Send your decision"):
         if "selected_suggestion" in st.session_state:
             st.session_state.selected_suggestion = None
             text_input = ""
         else:
             st.session_state.text_input = text_input
             text_input = ""
+    st.image("https://img.icons8.com/material-outlined/24/000000/send.png")
