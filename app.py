@@ -16,7 +16,7 @@ st.subheader("Choose your fate...")
 selected_option = sidebar.add_sidebar(options)
 
 # Define the grid of buttons with generic suggestions
-suggestions.add_suggestion()
+suggestions.add_suggestions()
 
 # Define the text input and send button
 if "selected_suggestion" in st.session_state:
