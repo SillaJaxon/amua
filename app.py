@@ -1,6 +1,6 @@
 import streamlit as st
 import sidebar
-import grid
+import suggestions
 
 # Define the options for the buttons in the sidebar
 options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"]
